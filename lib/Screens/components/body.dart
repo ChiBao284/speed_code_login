@@ -1,47 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:speed_code_login/Screens/login/login_screen.dart';
+import 'package:speed_code_login/components/rounded_button.dart';
+import 'package:speed_code_login/constants.dart';
+import 'background.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
-
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Background(
-        child: Column(children: <Widget>[
-      Text(
-        'sddshvf',
-      )
-    ]));
-  }
-}
-
-class Background extends StatelessWidget {
-  final Widget child;
-  const Background({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size; // size screen
-    return SizedBox(
-      height: size.height,
-      width: double.infinity,
-      child: Stack(alignment: Alignment.center, children: <Widget>[
-        Positioned(
-          top: 0,
-          left: 0,
-          width: size.width * 0.3,
-          child: Image.asset("assets/images/main_top.png"),
-        ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          width: size.width * 0.2,
-          child: Image.asset("assets/images/main_bottom.png"),
-        ),
-        child
-      ]),
-    );
+        child: SingleChildScrollView(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'WELCOME TO EDU',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: size.height * 0.04,
+            ),
+            SvgPicture.asset(
+              "assets/icons/chat.svg",
+              height: size.height * 0.4,
+            ),
+            SizedBox(
+              height: size.height * 0.04,
+            ),
+            RoundedButton(
+              text: 'LOGIN',
+              background: kPrimaryColor,
+              textColor: Colors.white,
+              onPress: () => {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginScreen();
+                }))
+              },
+            ),
+            RoundedButton(
+              text: 'REGISTER',
+              background: kPrimaryLightColor,
+              textColor: Colors.black,
+              onPress: () => print('login ne'),
+            ),
+          ]),
+    ));
   }
 }
