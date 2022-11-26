@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:speed_code_login/Screens/Login/components/body_login.dart';
+import 'package:speed_code_login/Screens/Login/components/rounded_input_login.dart';
+import 'package:speed_code_login/Screens/Login/components/text_filed_container.dart';
+import 'package:speed_code_login/Screens/SignUp/sign_up.dart';
+import 'package:speed_code_login/components/rounded_button.dart';
 import 'package:speed_code_login/constants.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -18,12 +22,18 @@ class LoginScreen extends StatelessWidget {
               'LOGIN',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
+            SizedBox(
+              height: size.height * 0.03,
+            ),
             SvgPicture.asset(
               'assets/icons/login.svg',
               width: size.height * 0.3,
             ),
+            SizedBox(
+              height: size.height * 0.05,
+            ),
             TextFieldContainer(
-              child: InputLogin(
+              child: RoundedInputLogin(
                 hintText: 'Your Email',
                 icon: Icons.person,
                 onChangeText: (value) {},
@@ -31,8 +41,8 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             TextFieldContainer(
-              child: InputLogin(
-                hintText: 'Your Email',
+              child: RoundedInputLogin(
+                hintText: 'Password',
                 icon: Icons.lock,
                 onChangeText: (value) {},
                 secureText: true,
@@ -42,84 +52,58 @@ class LoginScreen extends StatelessWidget {
                   color: kPrimaryColor,
                 ),
               ),
-            )
+            ),
+            RoundedButton(
+              text: 'LOGIN',
+              background: kPrimaryColor,
+              textColor: Colors.white,
+              onPress: () {},
+            ),
+            const AlreadyAccount()
           ]),
     ));
   }
 }
 
-// ignore: must_be_immutable
-class InputLogin extends StatefulWidget {
-  final String hintText;
-  final IconData? icon;
-  final Icon? suffixIcon;
-  final bool isPassword;
-  bool secureText;
-  final ValueChanged<String> onChangeText;
-  InputLogin(
-      {Key? key,
-      required this.hintText,
-      this.icon,
-      required this.onChangeText,
-      this.suffixIcon,
-      this.secureText = false,
-      this.isPassword = false})
-      : super(
-          key: key,
-        );
+class AlreadyAccount extends StatelessWidget {
+  final bool login;
+  const AlreadyAccount({
+    Key? key,
+    this.login = true,
+  }) : super(key: key);
 
-  @override
-  State<InputLogin> createState() => _InputLoginState();
-}
-
-class _InputLoginState extends State<InputLogin> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      obscureText: widget.secureText,
-      decoration: InputDecoration(
-          focusedBorder: InputBorder.none,
-          icon: Icon(
-            widget.icon,
-            color: kPrimaryColor,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          login ? 'Don\'t have an Account ? ' : 'Already have an account?',
+          style: const TextStyle(color: kPrimaryColor),
+        ),
+        GestureDetector(
+          onTap: () {
+            login
+                ? Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SignUpScreen();
+                      },
+                    ),
+                  )
+                : Navigator.pop(context);
+          },
+          child: Container(
+            padding: const EdgeInsets.all(5),
+            child: Text(
+              login ? 'Sign up' : 'Sign In',
+            ),
           ),
-          hintText: widget.hintText,
-          enabledBorder: InputBorder.none,
-          suffixIcon: widget.isPassword
-              ? InkWell(
-                  onTap: () {
-                    setState(() {
-                      widget.secureText = !widget.secureText;
-                    });
-                  },
-                  child: Ink(
-                      child: widget.secureText
-                          ? const Icon(Icons.remove_red_eye)
-                          : const Icon(Icons.visibility_off)),
-                )
-              : Container(
-                  width: 4,
-                )),
-      onChanged: widget.onChangeText,
+        ),
+      ],
     );
   }
 }
 
-class TextFieldContainer extends StatelessWidget {
-  final Widget child;
-  const TextFieldContainer({Key? key, required this.child}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      width: size.width * 0.8,
-      height: 50,
-      decoration: BoxDecoration(
-          color: kPrimaryLightColor, borderRadius: BorderRadius.circular(30)),
-      child: child,
-    );
-  }
-}
+// ignore: must_be_immutable
