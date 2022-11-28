@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:speed_code_login/Screens/Login/components/rounded_input_login.dart';
 import 'package:speed_code_login/Screens/Login/components/text_filed_container.dart';
+import 'package:speed_code_login/Screens/SignUp/components/background_sign_up.dart';
+import 'package:speed_code_login/Screens/SignUp/components/or_divider.dart';
+import 'package:speed_code_login/Screens/SignUp/components/social_button.dart';
 import 'package:speed_code_login/Screens/login/login_screen.dart';
 import 'package:speed_code_login/components/rounded_button.dart';
 
@@ -47,66 +50,30 @@ class SignUpScreen extends StatelessWidget {
             const AlreadyAccount(
               login: false,
             ),
-            Stack(
-              children: [
-                Container(
-                  height: 20,
-                  alignment: Alignment.bottomCenter,
-                  child: const Divider(
-                    thickness: 1,
-                    indent: 20,
-                    endIndent: 20,
-                    color: Colors.red,
+            const OrDivider(),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SocialButton(
+                    image: 'assets/icons/facebook.svg',
+                    onPress: () {},
                   ),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 40,
-                    height: 20,
-                    color: Colors.white,
-                    child: const Text('OR'),
+                  SocialButton(
+                    image: 'assets/icons/twitter.svg',
+                    onPress: () {},
                   ),
-                ),
-              ],
-            ),
+                  SocialButton(
+                    image: 'assets/icons/google-plus.svg',
+                    onPress: () {},
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
     );
-  }
-}
-
-class BackgroundSignUp extends StatelessWidget {
-  final Widget child;
-  const BackgroundSignUp({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-        height: size.height,
-        width: double.infinity,
-        child: Stack(alignment: Alignment.center, children: [
-          Positioned(
-              left: 0,
-              top: 0,
-              child: Image.asset(
-                "assets/images/signup_top.png",
-                width: size.height * 0.2,
-              )),
-          Positioned(
-              left: 0,
-              bottom: -10,
-              child: Image.asset(
-                "assets/images/main_bottom.png",
-                width: size.height * 0.125,
-              )),
-          child
-        ]));
   }
 }

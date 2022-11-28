@@ -35,7 +35,7 @@ class Body extends StatelessWidget {
               textColor: Colors.white,
               onPress: () => {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return LoginScreen();
+                  return const LoginScreen();
                 }))
               },
             ),
@@ -43,7 +43,7 @@ class Body extends StatelessWidget {
               text: 'REGISTER',
               background: kPrimaryLightColor,
               textColor: Colors.black,
-              onPress: () => print('login ne'),
+              onPress: () {},
             ),
           ]),
     ));
